@@ -1,6 +1,4 @@
 use std;
-use std::cmp::Ordering;
-use std::fmt::Debug;
 use std::fs;
 
 pub(crate) fn day1() {
@@ -17,11 +15,15 @@ pub(crate) fn day1() {
         second_list.push(split.last().unwrap().parse::<i32>().unwrap());
     }
 
-    task_1(first_list.clone(), second_list.clone());
-    task_2(first_list.clone(), second_list.clone());
+    let distance = task_1(first_list.clone(), second_list.clone());
+    let similarity = task_2(first_list.clone(), second_list.clone());
+
+    println!("DISTANCE SUM: {}", distance);
+    println!("SIMILARITY SUM: {}", similarity);
+
 }
 
-fn task_1(mut first_list: Vec<i32>, mut second_list: Vec<i32>) {
+fn task_1(mut first_list: Vec<i32>, mut second_list: Vec<i32>) -> i32 {
 
     first_list.sort();
     second_list.sort();
@@ -32,11 +34,10 @@ fn task_1(mut first_list: Vec<i32>, mut second_list: Vec<i32>) {
         let distance  = (value - second_value).abs();
         distances.push(distance);
     }
-    let distance_sum: i32 = distances.iter().sum();
-    println!("Distance sum: {}", distance_sum)
+    return distances.iter().sum();
 }
 
-fn task_2(mut first_list: Vec<i32>, mut second_list: Vec<i32>) {
+fn task_2(first_list: Vec<i32>, second_list: Vec<i32>) -> i32{
     let mut similarity_list = Vec::new();
 
     for i in first_list {
@@ -45,7 +46,26 @@ fn task_2(mut first_list: Vec<i32>, mut second_list: Vec<i32>) {
         similarity_list.push(i * num)
     }
 
-    let simularitySum: i32 = similarity_list.iter().sum();
+    return similarity_list.iter().sum();
 
-    println!("Simularity Sum = {}", simularitySum)
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn task1_works(){
+        let list_1 = vec![3,4,2,1,3,3];
+        let list_2 = vec![4,3,5,3,9,3];
+        assert_eq!(11, task_1(list_1,list_2))
+    }
+    #[test]
+    fn task2_works(){
+        let list_1 = vec![3,4,2,1,3,3];
+        let list_2 = vec![4,3,5,3,9,3];
+        assert_eq!(31, task_2(list_1,list_2))
+    }
+    
 }
