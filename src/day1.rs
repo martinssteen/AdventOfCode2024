@@ -1,6 +1,5 @@
 use std;
 use std::cmp::Ordering;
-use std::env;
 use std::fmt::Debug;
 use std::fs;
 
@@ -23,28 +22,18 @@ pub(crate) fn day1() {
 }
 
 fn task_1(mut first_list: Vec<i32>, mut second_list: Vec<i32>) {
-    fn find_smallest(vec: &Vec<i32>) -> (usize, &i32) {
-        vec.iter()
-            .enumerate()
-            .min_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap_or(Ordering::Equal))
-            .unwrap()
-    }
 
+    first_list.sort();
+    second_list.sort();
     let mut distances = Vec::new();
 
-    while (!first_list.iter().all(|&x| x == 999999999)) {
-        let (first_index, value) = find_smallest(&first_list);
-        let (second_index, value2) = find_smallest(&second_list);
-
-        let distance = (value - value2).abs();
-        // println!("FIRST VAL | INDEX = {} , {} | SECOND = {}, {} | DISTANCE = {} ", value, first_index, value2, second_index, distance);
+    for (index, value) in first_list.iter().enumerate(){
+        let second_value = second_list[index];
+        let distance  = (value - second_value).abs();
         distances.push(distance);
-        first_list[first_index] = 999999999;
-        second_list[second_index] = 999999999;
     }
-
-    let distanceSum: i32 = distances.iter().sum();
-    println!("Distance sum: {}", distanceSum)
+    let distance_sum: i32 = distances.iter().sum();
+    println!("Distance sum: {}", distance_sum)
 }
 
 fn task_2(mut first_list: Vec<i32>, mut second_list: Vec<i32>) {
