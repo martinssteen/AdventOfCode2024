@@ -126,10 +126,4 @@ mod tests {
         let result = task_2(vec);
         assert_eq!(4, result)
     }
-
-    #[test]
-    fn verify_worksAsItShould() {
-        let x = -3;
-        assert!((-3..4).contains(&x))
-    }
 }
