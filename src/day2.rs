@@ -38,53 +38,41 @@ fn value_is_negative(value: &i32) -> bool {
     value.is_negative()
 }
 
+///
+/// Checks if the given vectors is a valid report.
+///
+fn valid_report(vec: &Vec<i32>) -> bool {
+    let mut new_vec = Vec::new();
+    for (index, value) in vec.iter().enumerate() {
+        let next_index = index + 1;
+        if next_index >= vec.len() {
+            continue;
+        }
+        new_vec.push(value - vec[next_index])
+    }
+
+    new_vec.iter().all(value_within_allowed_range)
+        && (new_vec.iter().all(value_is_positive) || new_vec.iter().all(value_is_negative))
+}
+
 fn task_1(vec: Vec<Vec<i32>>) -> i32 {
     vec.iter()
-        .map(|nested_vec| {
-            let mut new_vec = Vec::new();
-            for (index, value) in nested_vec.iter().enumerate() {
-                let next_index = index + 1;
-                if next_index >= nested_vec.len() {
-                    continue;
-                }
-                new_vec.push(value - nested_vec[next_index])
-            }
-
-            new_vec
-        })
-        .filter(|modified_vecs| {
-            modified_vecs.iter().all(value_within_allowed_range)
-                && (modified_vecs.iter().all(value_is_positive)
-                    || modified_vecs.iter().all(value_is_negative))
-        })
+        .map(|nested_vec| valid_report(nested_vec))
+        .filter(|is_valid| *is_valid)
         .collect::<Vec<_>>()
         .len() as i32
 }
 
 fn task_2(vec: Vec<Vec<i32>>) -> i32 {
-    fn valid_list(vec: &Vec<i32>) -> bool {
-        let mut new_vec = Vec::new();
-        for (index, value) in vec.iter().enumerate() {
-            let next_index = index + 1;
-            if next_index >= vec.len() {
-                continue;
-            }
-            new_vec.push(value - vec[next_index])
-        }
-
-        new_vec.iter().all(value_within_allowed_range)
-            && (new_vec.iter().all(value_is_positive) || new_vec.iter().all(value_is_negative))
-    }
-
     vec.iter()
         .map(|nested_vec| {
-            if valid_list(nested_vec) {
+            if valid_report(nested_vec) {
                 return true;
             } else {
                 for i in 0..nested_vec.len() {
                     let mut clone = nested_vec.clone();
                     clone.remove(i);
-                    if valid_list(&clone) {
+                    if valid_report(&clone) {
                         return true;
                     }
                 }
