@@ -9,6 +9,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day14;
+mod day5;
 
 fn main() {
     let day = get_day();
@@ -18,6 +19,7 @@ fn main() {
         2 => day2::day2(),
         3 => day3::day3(),
         4 => day4::day4(),
+        5 => day5::day5(),
         14 => day14::day14(),
         _ => println!("This day4 does not exist yet!"),
     }
