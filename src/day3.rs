@@ -4,6 +4,8 @@ use std::fs;
 
 lazy_static! {
     static ref mul_regex: Regex = Regex::new(r"mul\(\d+\,\d+\)").unwrap();
+    
+    
     static ref mul_regex_task2: Regex = Regex::new(r"mul\(\d+\,\d+\)|do\(\)|don\'t\(\)").unwrap();
     static ref digit_regex: Regex = Regex::new(r"\d+\,\d+").unwrap();
 }
