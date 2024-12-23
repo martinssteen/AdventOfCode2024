@@ -1,14 +1,12 @@
-#![feature(tuple_trait)]
-
 use chrono;
 use chrono::Datelike;
 use std::env;
 
 mod day1;
+mod day14;
 mod day2;
 mod day3;
 mod day4;
-mod day14;
 mod day5;
 
 fn main() {
@@ -20,7 +18,6 @@ fn main() {
         3 => day3::day3(),
         4 => day4::day4(),
         5 => day5::day5(),
-        14 => day14::day14(),
         _ => println!("This day4 does not exist yet!"),
     }
 }
